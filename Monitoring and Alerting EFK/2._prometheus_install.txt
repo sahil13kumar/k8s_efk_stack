@@ -1,0 +1,23 @@
+Configure the prometheus.yml file and run prometheus so that it scrapes the metrics being exposed by the elasticsearch exporter at port 9114.
+---
+Download prometheus using the wget command:
+wget https://github.com/prometheus/prometheus/releases/download/v2.51.1/prometheus-2.51.1.linux-amd64.tar.gz
+Then extract the newly downloaded .tar.gz extension file:
+tar xzf prometheus-2.51.1.linux-amd64.tar.gz -C ./
+A folder titled prometheus-2.51.1.linux-amd64 will be visible under the root directory. Navigate within this folder and you will see few binaries and a prometheus.yml file.
+
+Edit the prometheus.yml file and append the following to the scrape_configs section:
+
+- job_name: "elasticsearch"
+  static_configs:
+  - targets: ["localhost:9114"]
+Here, we have added a new job named elasticsearch to prometheus, to scrape metrics from port 9114 on our host.
+
+Let's run the prometheus binary using our prometheus.yml file as the config:
+nohup ./prometheus --config.file=prometheus.yml &
+Ensure to run the above command in the background.
+
+By default, prometheus runs at port 9090. Using the View Port utility on the top right of this page, access this port.
+Once on the Prometheus query page, navigate to Status -> Targets. Here, you can see two jobs in the UP state:
+prometheus at port 9090
+elasticsearch at port 9114

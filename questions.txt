@@ -1,0 +1,55 @@
+In Fluentd configuration, which directive is used to parse log files?
+a.  <log> b. <format> c. <parser> d. <extract>
+
+Answer:- <parse>
+To parse log files, Fluentd typically uses plugins called "parsers." These parsers use the directive <parse> and are placed within the <source>, <match> or <filter> directives.
+
+2. Which plugin is used by Fluentd to forward logs to Elasticsearch?
+Ans:- Fluentd uses the fluent-plugin-elasticsearch plugin to forward logs to Elasticsearch. This plugin allows Fluentd to index and store log data in Elasticsearch, making it available for searching and analysis.
+
+Which plugin type can be used in Fluentd to modify the data structure of a log message?
+    Filter plugins in fluentd are used to parse, filter, and transform log messages as they pass through the Fluentd pipeline.
+
+What is the default port number for Kibana?
+The default port number for Kibana is 5601.
+
+Which file format is used for Kibana dashboard exports and imports?
+    Kibana uses a file format called NDJSON (Newline Delimited JSON) for exporting and importing dashboards.
+    NDJSON is a JSON format where each line represents a separate JSON object. This format is used to store multiple JSON objects in a single file, with each object separated by a newline character.
+
+In Kibana, what is the role of the Index Pattern?
+    An Index Pattern defines which Elasticsearch data to explore and visualize in Kibana.
+    Creating an Index Pattern in Kibana means specifying a pattern that matches the names of the Elasticsearch indices.
+    Once an index is created, Kibana analyzes the logs within it and identifies fields and their types.
+
+How does Kibana connect to Elasticsearch?
+    Kibana connects to Elasticsearch using the Elasticsearch REST API.
+    When you configure Kibana to connect to an Elasticsearch cluster, you provide the URL of the Elasticsearch cluster's REST API endpoint.
+    Kibana uses this endpoint to communicate with Elasticsearch for various operations.
+
+How would you secure Kibana access in a production environment?
+    Enabling Elasticsearch security features
+    One of the ways to secure Kibana is to ensure that Elasticsearch is secured with authentication, authorization, and transport layer security (TLS/SSL) to protect the data accessed by Kibana.
+
+Which Elasticsearch feature allows you to automate the creation of new indices when current ones meet specified conditions such as size or age?
+a. Sharding  b. Index rollover c. index replicas d. Index templates
+    index rollover
+    The feature in Elasticsearch that allows you to automate the creation of new indices when current ones meet specified conditions such as size or age is called Index Rollover.
+
+    This feature allows you to define conditions for when a new index should be created based on criteria such as size, age, or other factors, and then automatically "rollover" to a new index when those conditions are met.
+
+What is the main benefit of utilizing custom Fluentd plugins?
+    Enhancing log data with additional context.
+    Custom plugins allow you to parse, filter, and enrich log data with additional information, making it more meaningful and useful for analysis and troubleshooting.
+
+Which Elasticsearch index setting is critical for improving write performance in a log-heavy environment?
+    a. Increasing the index buffer size
+    b. increasing the number of replicas
+    c. changing the refresh interval
+    d. Decreasing the number of primary shards.
+    Answer: Changing the refresh interval.
+    The refresh interval controls how often the changes made to the index are made visible to search operations. In a log-heavy environment, setting a higher refresh interval can significantly improve write performance by reducing the frequency of index refreshes, which can be resource-intensive.
+
+In the context of Fluentd, what is the purpose of a buffer plugin?
+    a buffer plugin is used to temporarily store log data before it is processed and forwarded to its final destination.
+    This prevents loss of logs due to target unavailability, or network issues.test

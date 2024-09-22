@@ -1,0 +1,40 @@
+Define an alert rule in Prometheus for high Elasticsearch heap usage.
+
+Name the alert as HighElasticsearchHeapUsage.
+
+The alert should trigger if the heap usage is above 5% for more than 2 minutes, and its severity should be critical.
+
+Place the alert rule file inside the extracted prometheus folder.
+
+
+Refer to the Description page to view the syntax of an alert rules file.
+
+Note: This low heap usage percentage is just for demonstration purpose. In an actual setting, you would want this to be atleast 90%.
+
+
+
+Navigate to the prometheus-2.51.1.linux-amd64 folder and create a file named rules.yml with the following content:
+groups:
+- name: elasticsearch
+  rules:
+  - alert: HighElasticsearchHeapUsage
+    expr: elasticsearch_jvm_memory_used_bytes{job="elasticsearch"} / elasticsearch_jvm_memory_max_bytes{job="elasticsearch"} > 0.05
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High Elasticsearch heap usage (instance {{ $labels.instance }})"
+      description: "Elasticsearch instance {{ $labels.instance }} has high heap usage ({{ $value }} bytes used) for more than 2 minutes."
+Edit the prometheus.yml file and add the newly created rules file to it under the rule_files section:
+rule_files:
+   - "rules.yml"
+Save and exit.
+
+Identify the PID of the prometheus process:
+ps aux | grep prometheus
+and kill the process:
+
+kill -9 <pid>
+Re-start the process in the background so that it picks the updated file this time:
+nohup ./prometheus --config.file=prometheus.yml &
+In the Prometheus UI, navigate to the Alerts section. You will find your defined alert HighElasticsearchHeapUsage. This will remain in pending state for upto two minutes, and then go into the firing state.

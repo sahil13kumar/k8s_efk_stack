@@ -1,0 +1,43 @@
+Let's now download and run alertmanager to deal with the alert that we configured in the previous task.
+
+Use the official Prometheus downloads page to download alertmanager:
+https://prometheus.io/download/
+
+Run the alertmanager binary using the default configuration file.
+
+After the alerts are visible on alertmanager, to demonstrate how these alerts can be redirected using alertmanager, run the python script present in the /root/scripts path in a new terminal. You must see all the alerts received so far.
+
+
+Default port for Alertmanager is 9093.
+
+Here we have redirected the alerts to a local HTTP server. Refer to this document to learn how to redirect to other receiver targets:
+https://prometheus.io/docs/alerting/latest/configuration/#receiver-integration-settings
+
+
+Download alertmanager using the wget command:
+wget https://github.com/prometheus/alertmanager/releases/download/v0.27.0/alertmanager-0.27.0.linux-amd64.tar.gz
+Then extract the newly downloaded .tar.gz extension file:
+tar xzf alertmanager-0.27.0.linux-amd64.tar.gz -C ./
+A folder titled alertmanager-0.27.0.linux-amd64 will be visible under the root directory. Navigate within this folder and you will see few binaries and an alertmanager.yml file.
+
+Inspect this file but do not make any changes to it. You can see that the receiver is mentioned as the port 5001 of our machine. Run the following command to start alertmanager at the default port 9093:
+
+nohup ./alertmanager --config.file=alertmanager.yml &
+Identify the PID of the prometheus process:
+ps aux | grep prometheus
+and kill the process:
+
+kill -9 <pid>
+Navigate to the prometheus-2.51.1.linux-amd64 folder and edit the prometheus.yml file to include alertmanager under the alerting section:
+alerting:
+   alertmanagers:
+      - static_configs:
+            - targets: ["localhost:9093"]
+Re-start the process in the background so that it picks the updated configuration:
+nohup ./prometheus --config.file=prometheus.yml &
+Using the View Ports utility, access port number 9093. You can see your HighElasticsearchHeapUsage alert on the Alerts page.
+
+Open a new terminal, navigate to /root/scripts and run the python script:
+
+python3 alert_receiver.py
+You can see all the alerts on your terminal now.

@@ -1,0 +1,28 @@
+Install Grafana on your Kubernetes cluster to visualize Elasticsearch metrics from Prometheus.
+
+Use the official Grafana downloads page for the Linux platform: https://grafana.com/grafana/download?platform=linux
+
+Extract this file and run the grafana-server binary in the background.
+
+
+Default username and password for Grafana is admin. Use it to login for the first time, and then change the password to grafana_user123.
+
+Default port for Grafana is 3000.
+
+
+Download Grafana using the wget command:
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise-10.4.1.linux-amd64.tar.gz
+Then extract and unzip the newly downloaded .tar.gz extension file:
+tar xzf grafana-enterprise-10.4.1.linux-amd64.tar.gz -C ./
+A folder titled grafana-v10.4.1 will be visible under the root directory. Navigate within this folder and inspect the bin directory. This directory contains the binary file grafana-server that we will be using to run our grafana instance.
+
+Execute the following command from within the grafana-v10.4.1 folder:
+
+nohup ./bin/grafana-server &
+Grafana runs at port number 3000 by default. Navigate to this port using the View Port utility at the top right of this page.
+
+Enter admin as both the username and password in the Grafana login page. Next, you will be asked to update the password. Update it to grafana_user123.
+
+Open the menu on the left of the Grafana Welcome page under Home. Under the Connections submenu, click on Data sources -> Add data source and select Prometheus.
+
+Under Connection, enter http://localhost:9090/ for Prometheus server URL. Scroll to the bottom of this page and click on Save and Test.
